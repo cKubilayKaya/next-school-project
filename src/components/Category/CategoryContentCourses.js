@@ -3,10 +3,11 @@ import CategoryLevel from "./CategoryLevel";
 import Link from "next/link";
 import { format } from "date-fns";
 import { BookMarkIcon } from "../Icons/Icons";
+import { cn } from "@/lib/utils";
 
-export default function CategoryContentCourses({ courses }) {
-  return (
-    <div className="grid grid-cols-2 gap-14">
+export default function CategoryContentCourses({ courses, cols = 2 }) {
+  return courses?.length >= 1 ? (
+    <div className={cn({ "grid gap-14": true, "grid-cols-2": cols === 2, "grid-cols-3": cols === 3 })}>
       {courses?.map(({ id, slug, name, level, startDate, createdBy }) => (
         <div key={id} className="flex flex-col gap-3.5 transition-transform duration-300 hover:-translate-y-1 border border-[#282e3b] rounded-2xl pb-3.5">
           <div className="relative rounded-2xl">
@@ -39,5 +40,7 @@ export default function CategoryContentCourses({ courses }) {
         </div>
       ))}
     </div>
+  ) : (
+    <p>There are no courses in this category.</p>
   );
 }

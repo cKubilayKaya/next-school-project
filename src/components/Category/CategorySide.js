@@ -16,8 +16,8 @@ export default function CategorySide({ categories, slug }) {
             key={item?.id}
             href={`/category/${item?.slug}`}
             className={cn({
-              "h-12 p-2 rounded-xl flex items-center gap-2.5 text-gray-400 hover:text-white hover:bg-gray-800 transition duration-300": true,
-              "bg-gray-700 text-white": item?.slug === slug,
+              "h-12 p-2 rounded-xl flex items-center gap-2.5 text-gray-400 hover:text-white hover:bg-[#313030] transition duration-300": true,
+              "bg-[#312f2f] text-white": item?.slug === slug,
             })}
           >
             <img src={item?.courseImg} className="w-[30px] h-[30px] rounded" alt="" />
