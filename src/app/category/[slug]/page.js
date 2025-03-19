@@ -13,43 +13,44 @@ export default function CategoryDetail() {
   const [currentCategory, setCurrentCategory] = useState({});
   const [page, setPage] = useState({ activePage: Number(searchParams?.get("page")) || 1, totalPage: 1, totalCourses: 0 });
 
-  useEffect(() => {
-    const getCategoryById = async (id, query) => {
-      const res = await getCategoryByIdService(id, query);
-      setPage((prev) => ({
-        ...prev,
-        totalPage: Math.ceil(res?.data?.totalCourses / query.limit),
-        totalCourses: res?.data?.totalCourses,
-      }));
+  const getCategoryById = async (id, query) => {
+    const res = await getCategoryByIdService(id, query);
+    setPage((prev) => ({
+      ...prev,
+      totalPage: Math.ceil(res?.data?.totalCourses / query.limit),
+      totalCourses: res?.data?.totalCourses,
+    }));
 
-      return res;
-    };
+    return res;
+  };
 
-    const getCategories = async () => {
-      const res = await getCategoriesService();
-      if (res?.success) {
-        setCategories(
-          res?.data.map((item) => {
-            return { ...item, courseImg: "https://framerusercontent.com/images/clqaKZERNdsrT3X8DVDz2nmBBs.jpg?scale-down-to=1024" };
-          })
-        );
-        const findCategory = res?.data?.find((item) => item?.slug === slug);
-        setCurrentCategory(findCategory);
-        const params = { page: page?.activePage || 1, limit: 2 };
-        const categoryDetailData = await getCategoryById(findCategory?.id, params);
-        if (categoryDetailData?.success) {
-          setCourses(categoryDetailData?.data?.courses);
-        }
+  const getCategories = async () => {
+    const res = await getCategoriesService();
+    if (res?.success) {
+      setCategories(
+        res?.data.map((item) => {
+          return { ...item, courseImg: "https://framerusercontent.com/images/clqaKZERNdsrT3X8DVDz2nmBBs.jpg?scale-down-to=1024" };
+        })
+      );
+      const findCategory = res?.data?.find((item) => item?.slug === slug);
+      setCurrentCategory(findCategory);
+      const params = { page: page?.activePage || 1, limit: 4 };
+      const categoryDetailData = await getCategoryById(findCategory?.id, params);
+      if (categoryDetailData?.success) {
+        setCourses(categoryDetailData?.data?.courses);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     getCategories();
   }, [slug, searchParams]);
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mb-12">
       <div className="flex">
         <CategorySide categories={categories} slug={slug} />
-        <CategoryContent courses={courses} currentCategory={currentCategory} page={page} setPage={setPage} />
+        <CategoryContent courses={courses} currentCategory={currentCategory} page={page} setPage={setPage} getCategories={getCategories} />
       </div>
     </div>
   );

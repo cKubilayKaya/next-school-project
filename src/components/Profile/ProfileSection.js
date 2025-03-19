@@ -52,8 +52,6 @@ export default function ProfileSection({ user, profile, setProfile, getProfile }
       }
     }
 
-    console.log(updatedFields);
-
     try {
       const res = await updateProfileService(profile?.id, formData);
 

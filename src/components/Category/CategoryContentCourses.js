@@ -1,9 +1,11 @@
 import React from "react";
 import CategoryLevel from "./CategoryLevel";
 import Link from "next/link";
-import { format } from "date-fns";
 import { BookMarkIcon } from "../Icons/Icons";
 import { cn } from "@/lib/utils";
+import moment from "moment";
+
+moment.locale("tr");
 
 export default function CategoryContentCourses({ courses, cols = 2 }) {
   return courses?.length >= 1 ? (
@@ -19,7 +21,7 @@ export default function CategoryContentCourses({ courses, cols = 2 }) {
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-banner rounded-2xl"></div>
             <CategoryLevel level={level} />
             <div className="z-40 absolute flex items-center gap-2 bottom-4 right-6">
-              <p className="text-sm font-bold text-yellow-400">{format(new Date(startDate), "PP")}</p>
+              <p className="text-sm font-bold text-yellow-400">{moment(new Date(startDate)).format("D MMMM YYYY")}</p>
             </div>
           </div>
           <Link href={`/lessons/${slug}`} className="z-40 relative flex items-start justify-between mx-6">

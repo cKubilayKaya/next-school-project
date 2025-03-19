@@ -10,7 +10,7 @@ export default function CategoryLevel({ level }) {
           <div className="w-2 h-2 bg-yellow-400 rounded-full opacity-20"></div>
         </>
       )}
-      {level === "intermadiate" && (
+      {level === "intermediate" && (
         <>
           <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
           <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
